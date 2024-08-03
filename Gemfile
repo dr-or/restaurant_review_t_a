@@ -3,6 +3,7 @@ source "https://rubygems.org"
 ruby "3.3.4"
 
 gem "bootsnap", require: false
+gem 'faker', :git => 'https://github.com/faker-ruby/faker.git', :branch => 'main'
 gem "importmap-rails"
 gem "jbuilder"
 gem "pg", "~> 1.1"
