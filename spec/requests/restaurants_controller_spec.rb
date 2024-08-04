@@ -1,8 +1,8 @@
 require 'rails_helper'
 
-RSpec.describe "RestaurantsControllers", type: :request do
-  describe "GET /index" do
-    subject(:get_restaurants) { get restaurants_path, params: params }
+RSpec.describe 'RestaurantsControllers', type: :request do
+  describe 'GET /index' do
+    subject(:get_restaurants) { get restaurants_path, params: }
 
     # let(:restaurant) { create(:restaurant) }
     let(:params) { {} }
