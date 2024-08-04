@@ -1,7 +1,19 @@
 class ApplicationQuery
   class << self
+    attr_writer :query_model_name
+
+    def query_model_name
+      @query_model_name ||= name.sub(/::[^\:]+$/, '')
+    end
+
     def query_model
-      name.sub(/::[^\:]+$/, '').safe_constantize
+      query_model_name.safe_constantize
+    end
+
+    def [](model)
+      Class.new(self).tap do |klass|
+        klass.query_model_name = model.name
+      end
     end
 
     delegate :resolve, to: :new
