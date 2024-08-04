@@ -5,17 +5,34 @@ RSpec.describe "RestaurantsControllers", type: :request do
     subject(:get_restaurants) { get restaurants_path, params: params }
 
     # let(:restaurant) { create(:restaurant) }
+    let(:params) { {} }
 
     before do
       create(:restaurant)
-      get_restaurants
     end
 
-    context 'without params' do
-      let(:params) { {} }
+    it 'returns all restaurants' do
+      get_restaurants
+      expect(response_body.size).to eq 1
+    end
 
-      it 'returns all restaurants' do
-        expect(response_body[:restaurants].size).to eq 1
+    context 'with review_photo in params' do
+      let(:params) { { review_photo: true } }
+
+      let(:restaurant_w_review) { create(:restaurant) }
+      let(:review) { create(:review, restaurant: restaurant_w_review) }
+
+      before do
+        create(:image, target: review)
+        get_restaurants
+      end
+
+      it 'returns correct amount of restaurants' do
+        expect(response_body.size).to eq 1
+      end
+
+      it 'returns restaurants with photos in reviews' do
+        expect(response_body.first[:id]).to eq restaurant_w_review.id
       end
     end
   end
@@ -23,6 +40,6 @@ RSpec.describe "RestaurantsControllers", type: :request do
   private
 
   def response_body
-    JSON.parse(response.body, symbolize_names: true)
+    JSON.parse(response.body, symbolize_names: true)[:restaurants]
   end
 end
