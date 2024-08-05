@@ -1,24 +1,13 @@
-# README
+# Test assignment
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Realise a task on rails:
 
-Things you may want to cover:
+Design a database structure for the functionality that allows you to leave reviews for restaurants. A review includes rating, comment, number of likes and dislikes. Reviews can be commented by other users.
 
-* Ruby version
+Implement the following SQL queries to retrieve restaurants:
+ 1. With photo(s) of reviews
+ 2. By average cheque
+ 3. By rating
+ 4. By tip amount
 
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+Put the logic of filtering and retrieving restaurants in QueryObject.
