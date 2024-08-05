@@ -1,13 +1,7 @@
 class Restaurant::WithAverageBillQuery < ApplicationQuery
-  OPERATORS = {
-    more: '>',
-    less: '<',
-    eq: '='
-  }.freeze
-
   def resolve(avg_bill)
     key = avg_bill.keys.first
-    operator = OPERATORS[key.to_sym]
+    operator = Restaurant::OPERATORS[key.to_sym]
 
     restaurant_ids = Order.select(:restaurant_id)
                           .group(:restaurant_id)

@@ -10,12 +10,6 @@ class ApplicationQuery
       query_model_name.safe_constantize
     end
 
-    def [](model)
-      Class.new(self).tap do |klass|
-        klass.query_model_name = model.name
-      end
-    end
-
     delegate :resolve, to: :new
 
     alias call resolve

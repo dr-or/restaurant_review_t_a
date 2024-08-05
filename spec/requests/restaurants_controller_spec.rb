@@ -117,6 +117,63 @@ RSpec.describe 'RestaurantsControllers', type: :request do
         expect(response_body).to include_json(expected_json)
       end
     end
+
+    context 'with tips in params' do
+      let(:second_restaurant) { create(:restaurant) }
+      let(:expected_json) do
+        {
+          restaurants: [{
+            id: second_restaurant.id
+          }],
+          total: 1
+        }
+      end
+      let(:order) { create(:order, restaurant: second_restaurant) }
+
+      before do
+        create(:tip, order:)
+        create(:order, restaurant:)
+      end
+
+      context 'when more than tips count' do
+        let(:params) { { tips: { more: 1 } } }
+
+        before do
+          create(:tip, order:)
+          get_restaurants
+        end
+
+        it 'returns profitable restaurants' do
+          expect(response_body).to include_json(expected_json)
+        end
+      end
+
+      context 'when less than tips count' do
+        let(:params) { { tips: { less: 1 } } }
+        let(:expected_json) do
+          {
+            restaurants: [{
+              id: restaurant.id
+            }],
+            total: 1
+          }
+        end
+
+        it 'returns unprofitable restaurants' do
+          get_restaurants
+          expect(response_body).to include_json(expected_json)
+        end
+      end
+
+      context 'when equals tips count' do
+        let(:params) { { tips: { eq: 1 } } }
+
+        it 'returns restaurants' do
+          get_restaurants
+          expect(response_body).to include_json(expected_json)
+        end
+      end
+    end
   end
 
   private
