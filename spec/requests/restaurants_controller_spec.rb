@@ -95,6 +95,28 @@ RSpec.describe 'RestaurantsControllers', type: :request do
         end
       end
     end
+
+    context 'with rating in params' do
+      let(:params) { { rating: 4 } }
+      let(:restaurant_w_review) { create(:restaurant) }
+      let(:expected_json) do
+        {
+          restaurants: [{
+            id: restaurant_w_review.id
+          }],
+          total: 1
+        }
+      end
+
+      before do
+        create(:review, restaurant: restaurant_w_review, rating: 4)
+        get_restaurants
+      end
+
+      it 'returns restaurants with certain rating' do
+        expect(response_body).to include_json(expected_json)
+      end
+    end
   end
 
   private

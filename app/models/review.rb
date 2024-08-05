@@ -5,4 +5,6 @@ class Review < ApplicationRecord
 
   belongs_to :restaurant
   belongs_to :client
+
+  validates :rating, inclusion: { in: [*1..5], allow_blank: true }
 end

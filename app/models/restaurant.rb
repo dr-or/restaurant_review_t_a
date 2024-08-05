@@ -4,4 +4,5 @@ class Restaurant < ApplicationRecord
 
   scope :with_review_photo, WithReviewPhotoQuery
   scope :with_average_bill, WithAverageBillQuery[self] # rubocop:disable Rails/ScopeArgs
+  scope :with_rating, WithRatingQuery[self] # rubocop:disable Rails/ScopeArgs
 end
